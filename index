@@ -1,74 +1,1275 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>In Silico Drug Design Lab</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MOLECULEX — Artificial Intelligence in Drug Discovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#050d1a;--sf:#0a1628;--cd:#0f1f38;--bd:#1a3560;--ac:#00d4ff;--v:#7c3aed;--ok:#10b981;--wn:#f59e0b;--bad:#f87171;--tx:#e2e8f0;--mu:#8a9bb5;--mono:ui-monospace,Menlo,Consolas,monospace;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,"Segoe UI",sans-serif}
-nav{position:sticky;top:0;z-index:9;background:#050d1ad9;backdrop-filter:blur(10px);border-bottom:1px solid var(--bd);display:flex;gap:16px;align-items:center;padding:12px 20px;overflow-x:auto}
-nav b{font-family:var(--mono);color:var(--ac);margin-right:auto;white-space:nowrap;font-size:14px}nav a{font:12px var(--mono);color:var(--mu);text-decoration:none;white-space:nowrap}nav a:hover,nav a.on{color:var(--ac)}
-.hero{min-height:78vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 20px}
-.badge{font:11px var(--mono);color:var(--ac);border:1px solid #00d4ff40;background:#00d4ff14;border-radius:99px;padding:5px 14px;letter-spacing:.08em}
-h1{font-size:clamp(34px,6vw,64px);line-height:1.05;letter-spacing:-.03em;margin:22px 0 16px}h1 span{color:var(--ac)}h1 em{font-style:normal;color:var(--v)}
-.sub{max-width:620px;color:var(--mu)}.pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}.pill{font:12px var(--mono);border:1px solid var(--bd);background:var(--cd);border-radius:99px;padding:5px 12px}
-section{max-width:1060px;margin:auto;padding:56px 20px}.lb{font:11px var(--mono);color:var(--ac);letter-spacing:.15em;text-transform:uppercase}h2{font-size:clamp(24px,3.5vw,36px);margin:6px 0 8px;letter-spacing:-.02em}.d{color:var(--mu);max-width:640px;margin:0 0 24px}
-.card{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:18px}.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-label{display:block;font:11px var(--mono);color:var(--mu);margin-bottom:4px}input,select,button{font:inherit;color:var(--tx);background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:9px 12px}input,select{width:100%}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.pri{background:var(--ac);color:#04141a;border:0;font-weight:700}.warn{border:1px solid #f59e0b80;background:#f59e0b14;color:#fcd9a0;border-radius:10px;padding:10px 14px;font-size:14px;margin:0 0 16px}
-.trk{height:9px;background:var(--sf);border-radius:5px;overflow:hidden;margin:6px 0}.trk i{display:block;height:100%;transition:width .6s}.m{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}.m span:first-child{color:var(--mu);font-family:var(--mono);font-size:12px}
-.ok{color:var(--ok)}.bad{color:var(--bad)}.wn{color:var(--wn)}.mu{color:var(--mu);font-size:14px}.r{display:grid;grid-template-columns:140px 1fr 110px;gap:10px;align-items:center;margin:8px 0;font-size:14px}@media(max-width:560px){.r{grid-template-columns:1fr}}
-.lad div{display:flex;justify-content:space-between;padding:8px 12px;border:1px solid var(--bd);border-radius:8px;margin:4px 0;font-size:14px}.lad .y{border-color:var(--ok);background:#10b98114}.lad .top{box-shadow:0 0 0 2px var(--ac) inset;font-weight:600}
-.chk{display:flex;gap:8px;margin:6px 0;font-size:15px}.chk input{width:auto;margin-top:5px}details{background:var(--cd);border:1px solid var(--bd);border-radius:10px;padding:10px 14px;margin:8px 0}summary{cursor:pointer;font-weight:600}
-footer{border-top:1px solid var(--bd);padding:28px 20px;text-align:center;color:var(--mu);font-size:13px}.spin{display:inline-block;width:12px;height:12px;border:2px solid #04141a;border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;vertical-align:-1px}@keyframes s{to{transform:rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
-</style></head><body>
-<nav><b>◉ IN SILICO LAB</b><a href="#dock">Docking</a><a href="#lab">Drug-likeness</a><a href="#admet">ADMET</a><a href="#claim">Claim checker</a><a href="#guide">Study guide</a></nav>
-<header class="hero"><span class="badge">EDUCATIONAL · OFFLINE · NO API NEEDED</span><h1>In Silico <span>Drug Design</span> <em>Lab</em></h1><p class="sub">Learn how computers help find medicines. Try real calculations (molecular weight, Rule of Five) and clearly labelled demos (docking), then check any AI-drug headline for the evidence behind it.</p>
-<div class="pills"><span class="pill">Docking explained</span><span class="pill">Rule of Five calculator</span><span class="pill">ADMET guide</span><span class="pill">Claim checker</span></div></header>
+  :root {
+    --bg: #04201f;
+    --surface: #07302d;
+    --card: #0b3a36;
+    --border: #14574f;
+    --accent: #2dd4bf;
+    --accent2: #fb7185;
+    --accent3: #34d399;
+    --warn: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #8fb5b0;
+    --mono: 'Space Mono', monospace;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Outfit', sans-serif;
+  }
 
-<section id="dock"><div class="lb">01 · Molecular docking</div><h2>What docking is, and a demo</h2><p class="d">Docking predicts how a small molecule (ligand) might fit into a protein’s pocket and estimates a binding score. More negative ΔG usually means stronger predicted binding.</p>
-<div class="g" style="margin-bottom:16px">
-<div class="card"><b>1 · Prepare</b><p class="mu">Get the protein structure and the ligand’s 3D shape.</p></div><div class="card"><b>2 · Search poses</b><p class="mu">Software (e.g. AutoDock Vina) tries many positions and rotations in the pocket.</p></div><div class="card"><b>3 · Score</b><p class="mu">A scoring function estimates binding energy for each pose.</p></div><div class="card"><b>4 · Validate</b><p class="mu">Top hits must be tested in the lab. A score is a prediction, not proof.</p></div></div>
-<div class="card"><div class="warn"><b>ILLUSTRATIVE DEMO.</b> Ligands are fictional and the scores below are invented, fixed values. No docking software is running.</div>
-<div class="g"><div><label for="lg">Fictional ligand</label><select id="lg"><option value="0">LIG-A</option><option value="1">LIG-B</option><option value="2">LIG-C</option></select></div><div><label for="tg">Fictional target</label><select id="tg"><option value="0">Target 1 (enzyme)</option><option value="1">Target 2 (receptor)</option><option value="2">Target 3 (protease)</option></select></div><div style="align-self:end"><button class="pri" id="db" onclick="dock()">▶ Run demo</button></div></div><div id="dr" aria-live="polite"></div></div></section>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<section id="lab"><div class="lb">02 · Real calculation</div><h2>Drug-likeness lab</h2><p class="d">These calculations are real arithmetic on the numbers you enter. Lipinski’s Rule of Five is a guideline for likely oral absorption, with known exceptions.</p>
-<div class="g"><div class="card"><b>Molecular weight from formula</b><p class="mu">e.g. C9H8O4 (no brackets). Supports C H N O S P F Cl Br I Na K.</p><input id="fm" placeholder="C9H8O4" aria-label="Formula" oninput="fw()"><p id="fo" class="mu"></p><button onclick="uw()">Use as MW</button></div>
-<div class="card" style="grid-column:span 2"><b>Rule of Five and Veber</b><div class="g" style="margin-top:10px"><div><label for="mw">MW (Da)</label><input id="mw" type="number" step="any" oninput="lp()"></div><div><label for="lp">logP</label><input id="lp" type="number" step="any" oninput="lp()"></div><div><label for="hd">H-bond donors</label><input id="hd" type="number" oninput="lp()"></div><div><label for="ha">H-bond acceptors</label><input id="ha" type="number" oninput="lp()"></div><div><label for="rb">Rotatable bonds (opt.)</label><input id="rb" type="number" oninput="lp()"></div><div><label for="tp">TPSA Å² (opt.)</label><input id="tp" type="number" oninput="lp()"></div></div><p><button onclick="ex()">Load hypothetical example</button> <button onclick="clr()">Clear</button></p></div></div>
-<div class="card" id="lo" style="margin-top:14px" aria-live="polite"><span class="mu">Enter MW, logP, donors and acceptors to see the result.</span></div></section>
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
 
-<section id="admet"><div class="lb">03 · ADMET</div><h2>ADMET: what happens to a drug in the body</h2><p class="d">Real ADMET data comes from experiments and specialist models. This lab does not invent values; it explains what each letter asks and how it is tested.</p>
-<div class="g" id="ad"></div></section>
+  /* ── STARFIELD ── */
+  #starfield {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  }
 
-<section id="claim"><div class="lb">04 · Real-life tool</div><h2>AI-drug claim checker</h2><p class="d">Seen a headline like “AI-designed drug cures…”? Type it, tick only what the source clearly reports, and see how far the evidence really goes.</p>
-<div class="card"><label for="ct">Claim or headline</label><input id="ct" placeholder="e.g. AI-designed drug cures disease X" oninput="cc()"><p><b>Evidence reported</b></p><div id="ek"></div><p><b>Red flags</b></p><div id="fk"></div></div><div class="card" id="co" style="margin-top:14px" aria-live="polite"></div></section>
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(4,32,31,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-family: var(--mono);
+    transition: color 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .nav-links a:hover { color: var(--accent); }
 
-<section id="guide"><div class="lb">05 · Study guide</div><h2>Glossary and FAQ</h2><input id="gq" placeholder="Search terms…" aria-label="Search glossary" oninput="gl()" style="margin-bottom:12px"><div id="gl"></div>
-<h2 style="font-size:22px;margin-top:30px">What is real and what is simulated?</h2><div class="g"><div class="card"><b class="ok">Real</b><p class="mu">Formula weights, Rule of Five and Veber checks, the evidence ladder, and the definitions.</p></div><div class="card"><b class="wn">Illustrative</b><p class="mu">The docking demo: fictional ligands and fixed, invented scores.</p></div><div class="card"><b class="bad">Not included</b><p class="mu">Real docking, real ADMET prediction, medical advice or any claim that a medicine works.</p></div></div></section>
-<footer>Educational project · Biology for Engineers (25BSBE01) · B.Tech AIDD · JAIN (Deemed-to-be University) · Team 06<br>Guidelines and demos here are learning aids, not medical advice.</footer>
-<script>
-const $=i=>document.getElementById(i),v=i=>{const x=$(i).value;return x===""?null:+x};
-// Docking demo (fixed fictional values)
-const DK=[[-8.6,-6.1,-4.2],[-5.3,-9.1,-6.0],[-4.0,-5.6,-7.4]],MB=[[5,3,1],[2,6,3],[1,2,4]];
-function dock(){const b=$("db");b.disabled=true;b.innerHTML='<span class="spin"></span> Running…';$("dr").innerHTML="";setTimeout(()=>{const l=+$("lg").value,t=+$("tg").value,s=DK[l][t],c=s<=-8?"var(--ok)":s<=-5.5?"var(--wn)":"var(--bad)";
-$("dr").innerHTML=`<div class="m"><span>Demo ΔG</span><b style="color:${c}">${s} kcal/mol (fictional)</b></div><div class="trk"><i style="width:${Math.min(100,-s/12*100)}%;background:${c}"></i></div><div class="m"><span>Demo H-bonds</span><b>${MB[l][t]}</b></div><p class="mu">${s<=-8?"In a real study, a strong predicted score would only justify lab testing.":s<=-5.5?"Moderate predicted binding: a real project might try to optimise the structure.":"Weak predicted binding: a real project would likely deprioritise this pair."} These numbers are invented for teaching.</p>`;b.disabled=false;b.textContent="▶ Run demo"},1100)}
-// Formula MW
-const AM={C:12.011,H:1.008,N:14.007,O:15.999,S:32.06,P:30.974,F:18.998,Cl:35.45,Br:79.904,I:126.904,Na:22.99,K:39.098};let fv=null;
-function fw(){const s=$("fm").value.trim();fv=null;if(!s){$("fo").textContent="";return}if(!/^([A-Z][a-z]?\d*)+$/.test(s)){$("fo").textContent="Use element symbols and numbers only.";return}let t=0,x="";s.replace(/([A-Z][a-z]?)(\d*)/g,(m,e,n)=>{if(!AM[e])x=e;t+=(AM[e]||0)*(n?+n:1)});if(x){$("fo").textContent="Element “"+x+"” not supported.";return}fv=Math.round(t*100)/100;$("fo").innerHTML="MW ≈ <b>"+fv+" Da</b>"}
-const uw=()=>{if(fv){$("mw").value=fv;lp()}};
-// Rule of five
-const L=[["Molecular weight","mw",500,"Da"],["logP","lp",5,""],["H-bond donors","hd",5,""],["H-bond acceptors","ha",10,""]],VB=[["Rotatable bonds","rb",10,""],["TPSA","tp",140,"Å²"]];
-const rw=(n,a,m,u)=>{const o=a<=m;return`<div class="r"><span>${n}</span><div class="trk"><i style="width:${Math.max(0,Math.min(100,a/m*100))}%;background:var(${o?"--ok":"--bad"})"></i></div><span class="${o?"ok":"bad"}">${a}${u} ${o?"≤":">"} ${m}</span></div>`};
-function lp(){const a=L.map(x=>v(x[1]));if(a.some(x=>x===null)){$("lo").innerHTML='<span class="mu">Enter MW, logP, donors and acceptors to see the result.</span>';return}const n=L.filter((x,i)=>a[i]>x[2]).length,vb=VB.filter(x=>v(x[1])!==null);
-$("lo").innerHTML=`<h3 style="margin:0 0 8px">${n<=1?`<span class="ok">Within the Rule of Five</span> (${n} violation${n==1?"":"s"}; one is usually tolerated)`:`<span class="bad">Outside the Rule of Five</span> (${n} violations): oral absorption may be poor`}</h3>${L.map((x,i)=>rw(x[0],a[i],x[2],x[3])).join("")}${vb.length?'<p class="mu">Veber (optional)</p>'+vb.map(x=>rw(x[0],v(x[1]),x[2],x[3])).join(""):""}<p class="mu">Passing does not mean a molecule works or is safe; failing does not rule it out. Lab testing decides.</p>`}
-const ex=()=>{[["mw",420],["lp",3.2],["hd",2],["ha",6],["rb",5],["tp",90]].forEach(x=>$(x[0]).value=x[1]);lp()},clr=()=>{["mw","lp","hd","ha","rb","tp"].forEach(i=>$(i).value="");lp()};
-// ADMET guide
-$("ad").innerHTML=[["🫀","Absorption","Does the drug get into the bloodstream?","Cell-permeability assays; oral bioavailability studies."],["🩸","Distribution","Where does it go in the body?","Plasma protein binding and tissue distribution studies."],["⚙️","Metabolism","How is it chemically changed?","Liver-enzyme (e.g. CYP) tests."],["🚽","Excretion","How is it removed?","Half-life and clearance measurements."],["☠️","Toxicity","Can it cause harm?","Cell, animal and clinical safety studies."]].map(a=>`<div class="card"><div style="font-size:26px">${a[0]}</div><b>${a[1]}</b><p class="mu">${a[2]}</p><p class="mu"><b>In reality:</b> ${a[3]}</p></div>`).join("");
-// Claim checker
-const E=["Computational prediction (AI or simulation)","Laboratory / biochemical test","Animal study","Human trial Phase I (safety)","Human trial Phase II (early effectiveness)","Human trial Phase III (large confirmatory)","Regulatory approval"],FL=["Source is a press release or marketing page","Only one study is cited","Small or unstated sample size","Not peer reviewed / no paper linked","No limitations mentioned","Words like “cure”, “proven”, “breakthrough”"],
-VD=["Tick the evidence the source reports.","Prediction only: suggests candidates, shows nothing yet about real activity or safety.","Lab evidence: encouraging, but not evidence in animals or people.","Animal evidence: informative, but often does not carry over to people.","Phase I: shows tolerability, not that the drug works.","Phase II: early effectiveness signal; larger trials still needed.","Phase III reported: strong stage; check the exact results.","Approval reported: verify with the regulator’s records."];
-$("ek").innerHTML=E.map((e,i)=>`<label class="chk"><input type="checkbox" id="e${i}" onchange="cc()"> ${e}</label>`).join("");$("fk").innerHTML=FL.map((f,i)=>`<label class="chk"><input type="checkbox" id="f${i}" onchange="cc()"> ${f}</label>`).join("");
-function cc(){const e=E.map((x,i)=>$("e"+i).checked),f=FL.filter((x,i)=>$("f"+i).checked);let t=-1;e.forEach((x,i)=>{if(x)t=i});const gp=E.filter((x,i)=>!e[i]&&i<t),nx=E.slice(t+1,t+3);
-$("co").innerHTML=`<h3 style="margin:0">${t<0?"Waiting for evidence":"Highest stage reported"}</h3><p>${VD[t+1]}</p><div class="lad">${E.map((x,i)=>`<div class="${e[i]?"y":""} ${i==t?"top":""}"><span>${x}</span><span>${e[i]?"reported":"not reported"}</span></div>`).join("")}</div>`+(gp.length?`<p class="wn"><b>Check:</b> later stages ticked but earlier ones missing: ${gp.join("; ")}.</p>`:"")+(f.length?`<p class="bad"><b>Red flags (${f.length}):</b> ${f.join("; ")}.</p>`:t>=0?'<p class="ok">No red flags ticked.</p>':"")+(t>=0&&t<6?`<p class="mu"><b>Still to look for:</b> ${nx.join("; ")}.</p>`:"")+`<p class="mu">A reading aid, not a score: a claim is only as strong as the highest stage its source documents.</p>`}cc();
-// Glossary
-const G=[["Virtual screening","Using computers to rank large molecule libraries before lab testing."],["Molecular docking","Predicting how a ligand fits and binds in a protein pocket."],["Ligand","A small molecule that binds to a target."],["Target","A molecule in the body, often a protein, a drug is meant to act on."],["ΔG (binding free energy)","Estimated energy of binding; more negative suggests stronger predicted binding."],["Lipinski’s Rule of Five","Guideline: MW ≤ 500, logP ≤ 5, donors ≤ 5, acceptors ≤ 10 for likely oral absorption."],["logP","A measure of how fat-loving (lipophilic) a molecule is."],["ADMET","Absorption, Distribution, Metabolism, Excretion, Toxicity."],["De novo design","Generating new molecular structures with computational models."],["Drug repurposing","Finding new uses for existing drugs."],["pLDDT","AlphaFold’s per-residue confidence for a predicted structure."],["Phase I / II / III","Human trial stages: safety; early effectiveness; large confirmation."]];
-function gl(){const q=$("gq").value.toLowerCase(),l=G.filter(g=>(g[0]+g[1]).toLowerCase().includes(q));$("gl").innerHTML=l.length?l.map(g=>`<details><summary>${g[0]}</summary><p class="mu">${g[1]}</p></details>`).join(""):'<p class="mu">No matching terms.</p>'}gl();
-const ls=[...document.querySelectorAll("nav a")];addEventListener("scroll",()=>{let c="";document.querySelectorAll("section").forEach(s=>{if(s.getBoundingClientRect().top<140)c=s.id});ls.forEach(a=>a.classList.toggle("on",a.hash=="#"+c))});
-</script></body></html>
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(45,212,191,0.08);
+    border: 1px solid rgba(45,212,191,0.25);
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before { content: '◉'; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero h1 em { color: var(--accent2); font-style: normal; }
+
+  .hero-sub {
+    max-width: 600px;
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-pills {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    justify-content: center;
+    animation: fadeUp 0.6s 0.3s ease both;
+    margin-bottom: 3rem;
+  }
+  .pill {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    font-family: var(--mono);
+    color: var(--text);
+  }
+
+  .hero-scroll {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    animation: fadeUp 0.6s 0.5s ease both, bounce 2s 1.5s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── MOLECULE CANVAS ── */
+  #mol-canvas {
+    position: absolute;
+    top: 50%; right: 6%;
+    transform: translateY(-50%);
+    width: min(380px, 38vw);
+    height: min(380px, 38vw);
+    opacity: 0.9;
+  }
+  @media(max-width:768px){ #mol-canvas { display: none; } }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative; z-index: 1;
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .section-desc {
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    font-size: 0.95rem;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 1.5rem; }
+
+  /* ── DOCKING TOOL ── */
+  .tool-wrapper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .tool-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .dot { width:10px; height:10px; border-radius:50%; }
+  .dot-r{background:#ff5f57;} .dot-y{background:#febc2e;} .dot-g{background:#28c840;}
+
+  .tool-body { padding: 1.8rem; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media(max-width:600px){ .form-row { grid-template-columns: 1fr; } }
+
+  label { font-size: 0.75rem; font-family: var(--mono); color: var(--muted); display: block; margin-bottom: 0.4rem; letter-spacing: 0.05em; }
+  select, input[type=text], input[type=range] {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    padding: 0.65rem 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  select:focus, input:focus { border-color: var(--accent); }
+  select option { background: var(--card); }
+
+  input[type=range] {
+    padding: 0;
+    cursor: pointer;
+    accent-color: var(--accent);
+    height: 4px;
+    border: none;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: none; border-radius: 10px;
+    padding: 0.75rem 1.6rem;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .btn:hover { opacity: 0.85; transform: scale(1.02); }
+  .btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+  .btn-purple { background: var(--accent2); color: #fff; }
+  .btn-green { background: var(--accent3); color: #fff; }
+
+  /* result panel */
+  .result-panel {
+    margin-top: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    display: none;
+  }
+  .result-panel.show { display: block; animation: fadeUp 0.4s ease; }
+  .result-title { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
+  .metric-label { font-size: 0.82rem; color: var(--muted); }
+  .metric-value { font-family: var(--mono); font-size: 0.88rem; font-weight: 700; }
+  .good { color: var(--accent3); }
+  .ok   { color: var(--warn); }
+  .bad  { color: #f87171; }
+
+  .score-bar-wrap { margin: 1rem 0; }
+  .score-bar-bg { background: var(--border); border-radius: 999px; height: 6px; overflow: hidden; }
+  .score-bar-fill { height: 100%; border-radius: 999px; transition: width 1s ease; }
+
+  /* ── ADMET ── */
+  .admet-grid {
+    display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .admet-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .admet-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  .admet-name { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+  .admet-val { font-weight: 700; font-size: 0.95rem; }
+
+  /* ── AI CHAT ── */
+  .chat-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .chat-messages {
+    min-height: 260px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .msg {
+    display: flex; gap: 0.8rem; align-items: flex-start;
+    animation: fadeUp 0.3s ease;
+  }
+  .msg-avatar {
+    width: 32px; height: 32px; flex-shrink: 0;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .msg-avatar.user { background: rgba(251,113,133,0.25); color: var(--accent2); border: 1px solid rgba(251,113,133,0.3); }
+  .msg-avatar.ai   { background: rgba(45,212,191,0.15); color: var(--accent); border: 1px solid rgba(45,212,191,0.25); }
+  .msg-bubble {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    max-width: 85%;
+    white-space: pre-wrap;
+  }
+  .msg-bubble.ai-bubble { border-color: rgba(45,212,191,0.2); }
+
+  .chat-input-row {
+    display: flex; gap: 0.7rem;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .chat-input {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    padding: 0.65rem 1rem;
+    outline: none;
+    resize: none;
+    line-height: 1.5;
+  }
+  .chat-input:focus { border-color: var(--accent); }
+
+  /* typing indicator */
+  .typing { display: flex; gap: 4px; align-items: center; padding: 0.6rem; }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: 0.4; animation: blink 1.2s infinite; }
+  .typing span:nth-child(2){ animation-delay:0.2s; }
+  .typing span:nth-child(3){ animation-delay:0.4s; }
+  @keyframes blink { 0%,80%,100%{opacity:0.4} 40%{opacity:1} }
+
+  /* ── PIPELINE DIAGRAM ── */
+  .pipeline {
+    display: flex; align-items: flex-start; gap: 0;
+    overflow-x: auto; padding-bottom: 1rem;
+  }
+  .pipe-step {
+    flex: 1; min-width: 130px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+  }
+  .pipe-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.7rem;
+    border: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  .pipe-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    /* handled via JS connector */
+  }
+  .pipe-connector {
+    flex: 0 0 30px;
+    height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--border);
+    font-size: 1.2rem;
+    padding-top: 0;
+  }
+  .pipe-name { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.05em; line-height: 1.4; }
+
+  /* ── CONCEPTS ── */
+  .concept-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  /* ── GLOW ── */
+  .glow-blob {
+    position: fixed; pointer-events: none; z-index: 0;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.18;
+  }
+
+  /* loader spinner */
+  .spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* warning box */
+  .warn-box {
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    font-size: 0.78rem;
+    color: var(--warn);
+    font-family: var(--mono);
+    margin-bottom: 1rem;
+  }
+
+  /* range value display */
+  .range-row { display: flex; align-items: center; gap: 0.8rem; }
+  .range-val { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); min-width: 40px; text-align: right; }
+
+  .hero h1, .section-title { font-family: var(--serif); font-weight: 700; }
+  .btn-purple { color:#04201f; }
+  .nav-links { gap: 1.1rem; }
+  @media(max-width:1000px){ .nav-links{display:none;} }
+  .team-row { margin-top:1.2rem; font-family:var(--mono); font-size:0.72rem; color:var(--muted); line-height:1.8; animation: fadeUp 0.6s 0.4s ease both; }
+  .big-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.5rem; margin-bottom:1.5rem; }
+  .big-num { font-family:var(--serif); font-size:3.2rem; font-weight:700; line-height:1; }
+  .big-num.teal{color:var(--accent);} .big-num.rose{color:var(--accent2);}
+  .big-cap { color:var(--muted); font-size:0.85rem; margin-top:0.4rem; }
+  .src { font-family:var(--mono); font-size:0.65rem; color:var(--accent); margin-top:0.8rem; }
+  /* pipeline explorer */
+  .pipe-step { cursor:pointer; }
+  .pipe-step:hover .pipe-icon, .pipe-step.active .pipe-icon { border-color:var(--accent); box-shadow:0 0 0 3px rgba(45,212,191,0.2); }
+  .pipe-step.active .pipe-name { color:var(--accent); }
+  .pipe-detail { margin-top:1.5rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.2rem 1.5rem; font-size:0.88rem; line-height:1.7; color:var(--muted); }
+  .pipe-detail b { color:var(--text); }
+  /* architecture */
+  .arch { display:grid; grid-template-columns:1fr; gap:0.8rem; }
+  .layer { display:flex; gap:1rem; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:0.9rem 1.2rem; }
+  .layer-tag { flex:0 0 150px; font-family:var(--mono); font-size:0.75rem; font-weight:700; padding:0.5rem 0.7rem; border-radius:8px; text-align:center; color:#04201f; }
+  .layer p { font-size:0.85rem; color:var(--muted); line-height:1.5; }
+  @media(max-width:600px){ .layer{flex-direction:column;align-items:flex-start;} .layer-tag{flex:none;width:100%;} }
+  .loop-note { margin-top:1rem; text-align:center; font-size:0.85rem; color:var(--accent); font-family:var(--mono); }
+  /* charts */
+  .chart-card { margin-bottom:1.5rem; }
+  .chart-card h3 { font-family:var(--serif); font-size:1.25rem; margin-bottom:0.4rem; }
+  .chart-card .cdesc { font-size:0.85rem; color:var(--muted); line-height:1.6; margin-bottom:1.4rem; max-width:760px; }
+  .hbar-label { font-size:0.8rem; font-weight:600; margin:0.9rem 0 0.35rem; display:flex; justify-content:space-between; gap:1rem; }
+  .hbar-label span:last-child { font-family:var(--mono); color:var(--accent); }
+  .hbar-track { background:var(--border); border-radius:8px; height:20px; overflow:hidden; display:flex; }
+  .hbar { height:100%; width:0; transition:width 1.2s ease; }
+  .legend { display:flex; gap:1.2rem; flex-wrap:wrap; font-size:0.75rem; color:var(--muted); margin-bottom:0.5rem; }
+  .legend i { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:0.4rem; }
+  .vbars { display:flex; align-items:flex-end; justify-content:space-around; height:220px; border-bottom:1px solid var(--border); padding-top:1.5rem; }
+  .vcol { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; width:22%; height:100%; }
+  .vbar { width:100%; border-radius:8px 8px 0 0; height:0; transition:height 1.2s ease; }
+  .vval { font-family:var(--mono); font-weight:700; font-size:0.9rem; margin-bottom:0.4rem; }
+  .vlabels { display:flex; justify-content:space-around; font-size:0.78rem; font-weight:600; margin-top:0.6rem; text-align:center; }
+  .vlabels span { width:22%; }
+  .donut-wrap { display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+  .donut { width:150px; height:150px; border-radius:50%; position:relative; flex:none; }
+  .donut::after { content:attr(data-center); position:absolute; inset:24px; background:var(--card); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:700; font-size:0.8rem; text-align:center; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+  @media(max-width:800px){ .two-col{grid-template-columns:1fr;} }
+  .facts { display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:1rem; }
+  .fact { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:0.6rem 1rem; font-size:0.78rem; color:var(--muted); }
+  .fact b { color:var(--text); font-family:var(--mono); font-size:1rem; display:block; }
+  .lib-title { font-family:var(--mono); font-size:0.72rem; color:var(--accent); margin:1rem 0 0.5rem; letter-spacing:1px; }
+  .chips { display:flex; flex-wrap:wrap; gap:0.45rem; }
+  .chip { background:var(--surface); border:1px solid var(--border); color:var(--text); font-family:var(--sans); font-size:0.78rem; padding:0.3rem 0.7rem; border-radius:20px; cursor:pointer; transition:all 0.2s; }
+  .chip:hover { border-color:var(--accent); color:var(--accent); }
+  .lim-list p b { color:var(--text); }
+  .refs { font-size:0.8rem; color:var(--muted); line-height:1.7; padding-left:1.2rem; }
+  .refs li { margin-bottom:0.5rem; }
+  .credit { position:relative; z-index:1; text-align:center; padding:1rem 1rem 3rem; font-family:var(--mono); font-size:0.72rem; color:var(--muted); line-height:1.8; }
+  .credit a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="glow-blob" style="width:600px;height:600px;background:#2dd4bf;top:-100px;left:-150px;"></div>
+<div class="glow-blob" style="width:500px;height:500px;background:#fb7185;bottom:-100px;right:-100px;"></div>
+<canvas id="starfield"></canvas>
+
+<nav>
+  <span class="nav-logo">// MOLECULEX</span>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#pipeline">Pipeline</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#evidence">Evidence</a></li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#admet">ADMET</a></li>
+    <li><a href="#ai">Ask AI</a></li>
+    <li><a href="#refs">References</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">BIOLOGY FOR ENGINEERS · 25BSBE01 · TEAM 06</div>
+  <h1><span>Artificial Intelligence</span><br/>in <em>Drug Discovery</em></h1>
+  <p class="hero-sub">Applications, techniques and clinical evidence — an interactive prototype of our literature-based review. Explore where AI helps in the drug pipeline and what published studies actually measured.</p>
+  <div class="hero-pills">
+    <span class="pill">Protein Structure Prediction</span>
+    <span class="pill">Virtual Screening</span>
+    <span class="pill">De Novo Design</span>
+    <span class="pill">Drug Repurposing</span>
+    <span class="pill">Clinical Evidence</span>
+  </div>
+  <div class="hero-scroll">↓ SCROLL TO EXPLORE</div>
+  <div class="team-row">JAIN (Deemed-to-be) University · B.Tech AIDD · Submitted to Dr. Rohini<br/>Kashish · Sanchita · Kshitij · Debopriya · Prerona · Debraj</div>
+  <canvas id="mol-canvas"></canvas>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-label reveal">01 · INTRODUCTION</div>
+  <h2 class="section-title reveal">Why Drug Discovery Needs AI</h2>
+  <p class="section-desc reveal">Finding a medicine is slow, costly and risky. AI does not decide which drug is good — it helps experts look at the most promising options first.</p>
+  <div class="big-stats">
+    <div class="card reveal"><div class="big-num teal">$2.6B</div><div class="big-cap">Average cost to develop one new drug</div><div class="src">Deng et al., 2021 [2]</div></div>
+    <div class="card reveal"><div class="big-num rose">10+ yrs</div><div class="big-cap">Typical time from lab to clinic</div><div class="src">Deng et al., 2021 [2]</div></div>
+  </div>
+  <div class="card-grid">
+    <div class="card reveal"><div class="concept-icon">🧠</div><h3>Pattern Learning</h3><p>Machine learning and deep learning learn patterns from molecular structures, lab assays and patient records, then use them to make predictions.</p></div>
+    <div class="card reveal"><div class="concept-icon">🔍</div><h3>Early Filtering</h3><p>Virtual screening ranks huge libraries of molecules on a computer, so weak candidates are removed before expensive wet-lab tests.</p></div>
+    <div class="card reveal"><div class="concept-icon">🤝</div><h3>Human–AI Synergy</h3><p>Algorithms rank promising options; biologists and clinicians validate safety and effect in the lab and in patients.</p></div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section id="pipeline">
+  <div class="section-label reveal">02 · PIPELINE OVERVIEW</div>
+  <h2 class="section-title reveal">Where AI Accelerates the Pipeline</h2>
+  <p class="section-desc reveal">Click any stage to see what AI does there and an example from the sources.</p>
+  <div class="card reveal" style="padding:2.5rem;">
+    <div class="pipeline" id="pipeline-steps"></div>
+    <div class="pipe-detail" id="pipe-detail"></div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="section-label reveal">03 · SYSTEM ARCHITECTURE</div>
+  <h2 class="section-title reveal">Four-Layer AI Discovery Architecture</h2>
+  <p class="section-desc reveal">A conceptual architecture drawn from the reviewed sources [1], [2]. Results from the last layer flow back to the first, so models can be retrained.</p>
+  <div class="card reveal">
+    <div class="arch">
+      <div class="layer"><div class="layer-tag" style="background:#94a3b8">1 · Data Layer</div><p>Raw inputs: chemical libraries, protein sequences and structures, assay results, patient records.</p></div>
+      <div class="layer"><div class="layer-tag" style="background:#2dd4bf">2 · Model Layer</div><p>Algorithms: machine learning, deep neural networks, generative models (e.g. GENTRL), reinforcement learning.</p></div>
+      <div class="layer"><div class="layer-tag" style="background:#34d399">3 · Task Layer</div><p>Applied jobs: target finding, virtual screening, de novo design, synthesis planning, drug repurposing.</p></div>
+      <div class="layer"><div class="layer-tag" style="background:#fb7185">4 · Validation Layer</div><p>Real-world proof: wet-lab experiments, animal studies and human clinical trials.</p></div>
+    </div>
+    <div class="loop-note">↻ Closed-loop feedback: new results retrain the models</div>
+  </div>
+</section>
+
+<!-- TECHNIQUES -->
+<section id="techniques">
+  <div class="section-label reveal">04 · CORE APPLICATIONS</div>
+  <h2 class="section-title reveal">Key AI Techniques in Modern Pharmacology</h2>
+  <p class="section-desc reveal">The main application areas found in the literature.</p>
+  <div class="card-grid">
+    <div class="card reveal"><div class="concept-icon">🧬</div><h3>Protein Structure Prediction</h3><p>AlphaFold predicts a protein's 3D shape from its amino acid sequence, revealing binding pockets.</p></div>
+    <div class="card reveal"><div class="concept-icon">🔬</div><h3>Virtual Screening</h3><p>Models rank very large libraries (&gt;107 million molecules in one study) so labs test only the top candidates.</p></div>
+    <div class="card reveal"><div class="concept-icon">⚛️</div><h3>De Novo Molecule Design</h3><p>Generative models create brand-new molecules with wanted properties, such as potency and low toxicity.</p></div>
+    <div class="card reveal"><div class="concept-icon">💊</div><h3>Drug Repurposing</h3><p>Finds new uses for existing drugs — e.g. halicin, found as an antibiotic in the Drug Repurposing Hub.</p></div>
+  </div>
+</section>
+
+<!-- EVIDENCE -->
+<section id="evidence">
+  <div class="section-label reveal">05 · EVIDENCE FROM PUBLISHED STUDIES</div>
+  <h2 class="section-title reveal">What the Numbers Say</h2>
+  <p class="section-desc reveal">All values are taken as published (Table 3 of the report). Each study measures something different, so the charts should not be compared with each other as if on one scale.</p>
+
+  <div class="card chart-card reveal" data-chart>
+    <h3>AlphaFold CASP14 Prediction Error <span style="color:var(--muted);font-size:0.8rem;font-family:var(--mono)">(Fig. 10 · lower is better)</span></h3>
+    <p class="cdesc">Median r.m.s.d.95 error in Ångströms. AlphaFold cuts error by more than half versus the best alternative method, and gives pLDDT confidence scores so researchers know which regions to trust [7].</p>
+    <div class="legend"><span><i style="background:var(--accent)"></i>AlphaFold (median)</span><span><i style="background:#94a3b8"></i>Best alternative (median)</span></div>
+    <div class="hbar-label"><span>Backbone accuracy</span></div>
+    <div class="hbar-track"><div class="hbar" data-w="24" style="background:var(--accent)"></div></div><div class="hbar-label"><span></span><span>0.96 Å</span></div>
+    <div class="hbar-track"><div class="hbar" data-w="70" style="background:#94a3b8"></div></div><div class="hbar-label"><span></span><span style="color:#94a3b8">2.80 Å</span></div>
+    <div class="hbar-label"><span>All-atom accuracy</span></div>
+    <div class="hbar-track"><div class="hbar" data-w="37.5" style="background:var(--accent)"></div></div><div class="hbar-label"><span></span><span>1.50 Å</span></div>
+    <div class="hbar-track"><div class="hbar" data-w="87.5" style="background:#94a3b8"></div></div><div class="hbar-label"><span></span><span style="color:#94a3b8">3.50 Å</span></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card chart-card reveal" data-chart>
+      <h3>DDR1 Kinase Inhibitor Timeline</h3>
+      <p class="cdesc">A deep generative model (GENTRL) designed DDR1 inhibitors in 21 days; 46 days end-to-end. Six inhibitors were designed and four tested compounds were active [5].</p>
+      <div class="vbars">
+        <div class="vcol"><div class="vval" style="color:var(--accent)">21</div><div class="vbar" data-h="45" style="background:var(--accent)"></div></div>
+        <div class="vcol"><div class="vval" style="color:#94a3b8">25</div><div class="vbar" data-h="54" style="background:#94a3b8"></div></div>
+        <div class="vcol"><div class="vval" style="color:var(--accent2)">46</div><div class="vbar" data-h="100" style="background:var(--accent2)"></div></div>
+      </div>
+      <div class="vlabels"><span>AI design (days)</span><span>Synthesis &amp; testing</span><span>Total end-to-end</span></div>
+    </div>
+
+    <div class="card chart-card reveal" data-chart>
+      <h3>Antibiotic Discovery Funnel</h3>
+      <p class="cdesc">Stokes et al. trained a neural network on 2,335 molecules, screened &gt;107 million, and lab-tested 23 predictions; 8 were antibacterial [6].</p>
+      <div class="donut-wrap">
+        <div class="donut" id="donut1" data-center="8 / 23"></div>
+        <div style="font-size:0.85rem;line-height:2;">
+          <div><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--accent);margin-right:0.5rem"></i><b>Antibacterial: 8</b> (35%)</div>
+          <div><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--border);margin-right:0.5rem"></i>Not antibacterial: 15 (65%)</div>
+        </div>
+      </div>
+      <div class="facts"><div class="fact"><b>2,335</b>training</div><div class="fact"><b>&gt;107M</b>screened</div><div class="fact"><b>23</b>lab tested</div></div>
+    </div>
+  </div>
+
+  <div class="card chart-card reveal" data-chart>
+    <h3>Clinical Trial Success: AI vs. Industry Average <span style="color:var(--muted);font-size:0.8rem;font-family:var(--mono)">(Figs. 5 &amp; 6)</span></h3>
+    <p class="cdesc">AI-discovered molecules reach 80–90% success in Phase I safety trials (historic industry range about 40–65%), but about 40% in Phase II efficacy trials on a limited sample — similar to historic averages [8].</p>
+    <div class="hbar-label"><span>Phase I — AI-discovered</span><span>80–90%</span></div>
+    <div class="hbar-track"><div class="hbar" data-w="80" style="background:var(--accent)"></div><div class="hbar" data-w="10" style="background:var(--accent2)"></div></div>
+    <div class="hbar-label"><span style="color:var(--muted)">Phase I — historic industry average</span><span style="color:#94a3b8">about 40–65%</span></div>
+    <div class="hbar-track"><div class="hbar" data-w="40" style="background:#64748b"></div><div class="hbar" data-w="25" style="background:#94a3b8"></div></div>
+    <div class="hbar-label"><span>Phase II — AI-discovered (limited sample)</span><span>about 40%</span></div>
+    <div class="hbar-track"><div class="hbar" data-w="40" style="background:#0f766e"></div></div>
+    <p class="src">Bars show the lower end of each range, then the extra up to the upper end.</p>
+  </div>
+
+  <div class="card chart-card reveal" data-chart>
+    <h3>AI-Discovered Drugs in Clinical Development <span style="color:var(--muted);font-size:0.8rem;font-family:var(--mono)">(Fig. 7)</span></h3>
+    <p class="cdesc">Still a small group: 67 of 6,147 drugs in clinical development (about 1%) were AI-discovered molecules; 24 (0.4%) have AI-discovered targets [8].</p>
+    <div class="donut-wrap">
+      <div class="donut" id="donut2" data-center="67 / 6,147"></div>
+      <div style="font-size:0.85rem;line-height:2;">
+        <div><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--accent2);margin-right:0.5rem"></i><b>AI-discovered: 67</b> (~1.1%)</div>
+        <div><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--border);margin-right:0.5rem"></i>All other molecules: 6,080</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="section-label reveal">06 · INTERACTIVE DEMO</div>
+  <h2 class="section-title reveal">Virtual Screening Demo</h2>
+  <p class="section-desc reveal">A simplified, simulated example of step 3 of the workflow: a model scores how well a drug (ligand) fits a protein target, so scientists test the best ones first. Values are illustrative, not real docking output.</p>
+  <div class="tool-wrapper reveal">
+    <div class="tool-header"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span style="margin-left:0.5rem;">virtual_screening_demo.py — simulated</span></div>
+    <div class="tool-body">
+      <div class="form-row">
+        <div><label>DRUG CANDIDATE (LIGAND)</label>
+          <select id="ligand-select">
+            <option value="aspirin">Aspirin (C₉H₈O₄)</option><option value="ibuprofen">Ibuprofen (C₁₃H₁₈O₂)</option><option value="caffeine">Caffeine (C₈H₁₀N₄O₂)</option><option value="oseltamivir">Oseltamivir (Tamiflu)</option><option value="remdesivir">Remdesivir</option><option value="lopinavir">Lopinavir (HIV protease inhibitor)</option><option value="metformin">Metformin</option>
+          </select></div>
+        <div><label>TARGET PROTEIN (RECEPTOR)</label>
+          <select id="receptor-select">
+            <option value="cox2">COX-2 (Cyclooxygenase-2)</option><option value="ace2">ACE2 (SARS-CoV-2 receptor)</option><option value="hivp">HIV-1 Protease</option><option value="egfr">EGFR (Lung cancer)</option><option value="ada2">Adenosine A2A Receptor</option><option value="dpp4">DPP-4 (Diabetes target)</option>
+          </select></div>
+      </div>
+      <div class="form-row">
+        <div><label>GRID BOX SIZE (Å)</label><div class="range-row"><input type="range" id="grid-size" min="10" max="30" value="20" oninput="document.getElementById('gv').textContent=this.value+'Å'"/><span class="range-val" id="gv">20Å</span></div></div>
+        <div><label>EXHAUSTIVENESS</label><div class="range-row"><input type="range" id="exhaust" min="1" max="16" value="8" oninput="document.getElementById('ev').textContent=this.value"/><span class="range-val" id="ev">8</span></div></div>
+      </div>
+      <button class="btn" id="dock-btn" onclick="runDocking()">▶ Run Screening</button>
+      <div class="result-panel" id="dock-result"><div class="result-title">// SCREENING RESULTS (simulated)</div><div id="dock-metrics"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMET -->
+<section id="admet">
+  <div class="section-label reveal">07 · PRECLINICAL PREDICTION</div>
+  <h2 class="section-title reveal">ADMET Predictor</h2>
+  <p class="section-desc reveal">AI is also used to predict properties before preclinical tests. Choose from 56 common medicines and 20 antibiotics to see the Absorption, Distribution, Metabolism, Excretion and Toxicity profile.</p>
+  <div class="tool-wrapper reveal">
+    <div class="tool-header"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span style="margin-left:0.5rem;">admet_predictor.py</span></div>
+    <div class="tool-body">
+      <div class="warn-box">⚠ Typical textbook values, approximate and for education only. Not for clinical use.</div>
+      <div style="display:flex;gap:0.8rem;flex-wrap:wrap;align-items:flex-end;">
+        <div style="flex:1;min-width:220px;"><label>MOLECULE / DRUG NAME</label>
+          <input type="text" id="admet-input" list="drug-list" placeholder="Type a drug name, e.g. Paracetamol, Amoxicillin" onkeydown="if(event.key==='Enter')runADMET()"/></div>
+        <button class="btn btn-purple" id="admet-btn" onclick="runADMET()">🔍 Predict ADMET</button>
+      </div>
+      <div id="admet-result" class="result-panel">
+        <div class="result-title">// ADMET ANALYSIS</div>
+        <div class="admet-grid" id="admet-cards"></div>
+        <div id="admet-summary" style="margin-top:1.2rem;font-size:0.85rem;color:var(--muted);line-height:1.7;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card reveal" style="margin-top:1.5rem;">
+    <h3 style="font-family:var(--serif);font-size:1.25rem;margin-bottom:0.3rem;">Drug Library</h3>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Click any drug to see its ADMET profile.</p>
+    <div class="lib-title">Common medicines (<span id="cnt-meds"></span>)</div><div class="chips" id="chips-meds"></div>
+    <div class="lib-title">Antibiotics (<span id="cnt-abx"></span>)</div><div class="chips" id="chips-abx"></div>
+  </div>
+</section>
+
+<!-- AI ASSISTANT -->
+<section id="ai">
+  <div class="section-label reveal">08 · ASK THE ASSISTANT</div>
+  <h2 class="section-title reveal">AI in Drug Discovery Assistant</h2>
+  <p class="section-desc reveal">Ask about AlphaFold, virtual screening, de novo design, clinical success rates or the limits of AI. Answers are based on the sources in our report.</p>
+  <div class="chat-wrap reveal">
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg"><div class="msg-avatar ai">AI</div><div class="msg-bubble ai-bubble">Hello! 👋 I can explain how AI is used in drug discovery:
+• Where AI fits in the pipeline
+• AlphaFold, virtual screening, de novo design
+• Clinical trial success rates (Phase I vs Phase II)
+• Limitations such as biased data
+What would you like to explore?</div></div>
+    </div>
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chat-input" rows="1" placeholder="Ask about AI in drug discovery..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+      <button class="btn" id="chat-btn" onclick="sendChat()">Send →</button>
+    </div>
+  </div>
+</section>
+
+<!-- LIMITATIONS -->
+<section id="limits">
+  <div class="section-label reveal">09 · CRITICAL EVALUATION</div>
+  <h2 class="section-title reveal">Limitations &amp; Future Priorities</h2>
+  <div class="two-col" style="margin-top:2rem;">
+    <div class="card reveal lim-list"><h3 style="color:var(--accent2)">Key Challenges</h3><br/>
+      <p><b>Data &amp; human bias:</b> narrow training sets reduce generalisation to novel targets [4].</p><br/>
+      <p><b>Phase II bottleneck:</b> models cannot yet fully simulate complex human physiology.</p><br/>
+      <p><b>Review scope:</b> literature synthesis of 8 sources; Phase II sample is limited; no new experiments or user studies.</p></div>
+    <div class="card reveal lim-list"><h3 style="color:var(--accent)">Future Roadmap</h3><br/>
+      <p><b>Explainable AI:</b> confidence scores (like AlphaFold's pLDDT) build scientist trust.</p><br/>
+      <p><b>Broader datasets:</b> diverse, less biased data and larger Phase II/III studies.</p><br/>
+      <p><b>Interdisciplinary teams:</b> engineers, biologists and chemists working together.</p></div>
+  </div>
+  <div class="card reveal" style="margin-top:1.5rem;text-align:center;padding:2.2rem;">
+    <h3 style="font-family:var(--serif);font-size:1.4rem;margin-bottom:0.8rem;">AI accelerates early discovery, while wet labs confirm human safety</h3>
+    <p style="max-width:720px;margin:0 auto;">Published studies show AI cutting molecular design to 21 days, predicting protein folds within 0.96 Å and reaching 80–90% Phase I success — yet Phase II efficacy (~40%) and data bias show that computational models must partner with laboratory and clinical validation.</p>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section id="refs">
+  <div class="section-label reveal">REFERENCES</div>
+  <h2 class="section-title reveal">Sources</h2>
+  <div class="card reveal">
+    <ol class="refs">
+      <li>D. Paul et al., "Artificial intelligence in drug discovery and development," <i>Drug Discovery Today</i>, 26(1), 80–93, 2020.</li>
+      <li>J. Deng et al., "Artificial intelligence in drug discovery: applications and techniques," arXiv:2106.05386, 2021.</li>
+      <li>J. Vamathevan et al., "Applications of machine learning in drug discovery and development," <i>Nat. Rev. Drug Discov.</i>, 18, 463–477, 2019.</li>
+      <li>G. Ghislat et al., "Data-centric challenges with the application and adoption of AI for drug discovery," arXiv:2407.05150, 2024.</li>
+      <li>A. Zhavoronkov et al., "Deep learning enables rapid identification of potent DDR1 kinase inhibitors," <i>Nat. Biotechnol.</i>, 37, 1038–1040, 2019.</li>
+      <li>J. M. Stokes et al., "A deep learning approach to antibiotic discovery," <i>Cell</i>, 180(4), 688–702, 2020.</li>
+      <li>J. Jumper et al., "Highly accurate protein structure prediction with AlphaFold," <i>Nature</i>, 596, 583–589, 2021.</li>
+      <li>M. K. Jayatunga et al., "How successful are AI-discovered drugs in clinical trials?" <i>Drug Discovery Today</i>, 29(6), 104009, 2024.</li>
+    </ol>
+  </div>
+</section>
+
+<p class="credit">Biology for Engineers (25BSBE01) · Team 06 · JAIN (Deemed-to-be) University<br/>Prototype of the literature review "AI in Drug Discovery" · Built by <a href="https://github.com/kshitijkumar-dev" target="_blank">Kshitij Kumar</a></p>
+
+<script>// ═══════════════════════════════════════
+// STARFIELD
+// ═══════════════════════════════════════
+(function(){
+  const c = document.getElementById('starfield');
+  const ctx = c.getContext('2d');
+  let W, H, stars = [];
+  function resize(){ W=c.width=window.innerWidth; H=c.height=window.innerHeight; }
+  function init(){
+    resize();
+    stars = Array.from({length:120},()=>({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*1.2+0.2,
+      o:Math.random()*0.6+0.1,
+      s:Math.random()*0.3+0.05
+    }));
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,220,255,${s.o})`;
+      ctx.fill();
+      s.y-=s.s;
+      if(s.y<-2){s.y=H+2;s.x=Math.random()*W;}
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',init);
+  init(); draw();
+})();
+
+// ═══════════════════════════════════════
+// MOLECULE CANVAS (3D rotating)
+// ═══════════════════════════════════════
+(function(){
+  const c = document.getElementById('mol-canvas');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width = c.offsetWidth;
+  const H = c.height = c.offsetHeight;
+  const cx = W/2, cy = H/2;
+  let angle = 0;
+
+  // Benzene ring + substituents approximating aspirin
+  const atoms = [
+    // benzene ring
+    {r:0.45,a:0,label:'C',color:'#60a5fa'},
+    {r:0.45,a:60,label:'C',color:'#60a5fa'},
+    {r:0.45,a:120,label:'C',color:'#60a5fa'},
+    {r:0.45,a:180,label:'C',color:'#60a5fa'},
+    {r:0.45,a:240,label:'C',color:'#60a5fa'},
+    {r:0.45,a:300,label:'C',color:'#60a5fa'},
+    // OH group
+    {r:0.72,a:30,label:'O',color:'#f87171'},
+    {r:0.95,a:15,label:'H',color:'#94a3b8'},
+    // COOH
+    {r:0.72,a:330,label:'C',color:'#60a5fa'},
+    {r:0.95,a:345,label:'O',color:'#f87171'},
+    {r:0.95,a:315,label:'O',color:'#f87171'},
+  ];
+  const bonds = [
+    [0,1],[1,2],[2,3],[3,4],[4,5],[5,0], // ring
+    [0,6],[6,7], // OH
+    [5,8],[8,9],[8,10] // COOH
+  ];
+
+  const R = Math.min(W,H)*0.35;
+
+  function project(atom, t){
+    const rad = (atom.a + t) * Math.PI/180;
+    const x = cx + atom.r * R * Math.cos(rad);
+    const y = cy + atom.r * R * Math.sin(rad) * 0.55;
+    return {x, y};
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const t = angle;
+
+    // bonds
+    bonds.forEach(([i,j])=>{
+      const p1 = project(atoms[i],t);
+      const p2 = project(atoms[j],t);
+      ctx.beginPath();
+      ctx.moveTo(p1.x,p1.y);
+      ctx.lineTo(p2.x,p2.y);
+      ctx.strokeStyle='rgba(100,148,220,0.5)';
+      ctx.lineWidth=1.5;
+      ctx.stroke();
+    });
+
+    // atoms
+    atoms.forEach(atom=>{
+      const p = project(atom,t);
+      const isH = atom.label==='H';
+      const rad = isH ? 5 : 9;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,rad,0,Math.PI*2);
+      ctx.fillStyle=atom.color+'33';
+      ctx.fill();
+      ctx.strokeStyle=atom.color;
+      ctx.lineWidth=1.5;
+      ctx.stroke();
+      if(!isH){
+        ctx.fillStyle=atom.color;
+        ctx.font='bold 8px Space Mono, monospace';
+        ctx.textAlign='center';
+        ctx.textBaseline='middle';
+        ctx.fillText(atom.label,p.x,p.y);
+      }
+    });
+
+    // label
+    ctx.fillStyle='rgba(0,212,255,0.5)';
+    ctx.font='11px Space Mono, monospace';
+    ctx.textAlign='center';
+    ctx.fillText('Aspirin — C₉H₈O₄',cx,H-16);
+
+    angle += 0.4;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═══════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+
+// ═══ chart animation ═══
+const chartObs = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.querySelectorAll('.hbar').forEach(b=>b.style.width=b.dataset.w+'%');
+    e.target.querySelectorAll('.vbar').forEach(b=>b.style.height=b.dataset.h+'%');
+    chartObs.unobserve(e.target);
+  });
+},{threshold:0.3});
+document.querySelectorAll('[data-chart]').forEach(el=>chartObs.observe(el));
+document.getElementById('donut1').style.background='conic-gradient(var(--accent) 0 '+(8/23*100)+'%, var(--border) 0)';
+document.getElementById('donut2').style.background='conic-gradient(var(--accent2) 0 '+(67/6147*100)+'%, var(--border) 0)';
+
+// ═══ pipeline explorer ═══
+const steps = [
+  {icon:'🎯',bg:'rgba(251,113,133,0.15)',name:'Target\nIdentification',what:'AI mines biological data to find disease targets (often proteins).',ex:'AlphaFold predicts target 3D shapes from sequence, median backbone error 0.96 Å in CASP14 [7].'},
+  {icon:'🔍',bg:'rgba(52,211,153,0.15)',name:'Hit Finding\n(Screening)',what:'Models rank very large molecule libraries so only the best are tested in the lab.',ex:'A model screened more than 107 million molecules; 23 predictions were tested and 8 were antibacterial [6].'},
+  {icon:'⚛️',bg:'rgba(45,212,191,0.15)',name:'Lead Design\n(De Novo)',what:'Generative models create new molecules from scratch with wanted properties.',ex:'GENTRL designed DDR1 inhibitors in 21 days; 46 days from design to validation [5].'},
+  {icon:'⚗️',bg:'rgba(245,158,11,0.15)',name:'Synthesis\nPlanning',what:'Retrosynthesis works backwards to suggest how a molecule can be made.',ex:'Listed with virtual screening and de novo design as a popular AI use [2].'},
+  {icon:'🧪',bg:'rgba(251,113,133,0.15)',name:'Preclinical\nTests',what:'AI predicts properties such as toxicity and binding before animal and lab studies.',ex:'Most chances to save time and cost lie in early discovery and preclinical stages [4].'},
+  {icon:'💊',bg:'rgba(52,211,153,0.15)',name:'Clinical\nTrials',what:'AI can help plan trials, and AI-discovered molecules are now entering them.',ex:'80–90% Phase I success for AI-discovered molecules, ~40% in Phase II (limited sample) [8].'},
+];
+const pw = document.getElementById('pipeline-steps');
+function showStep(i){
+  document.querySelectorAll('.pipe-step').forEach((s,k)=>s.classList.toggle('active',k===i));
+  const s = steps[i];
+  document.getElementById('pipe-detail').innerHTML = `<b>${i+1}. ${s.name.replace('\n',' ')}</b><br/><b>What AI does:</b> ${s.what}<br/><b>Example:</b> ${s.ex}`;
+}
+steps.forEach((s,i)=>{
+  const el = document.createElement('div');
+  el.className='pipe-step';
+  el.onclick=()=>showStep(i);
+  el.innerHTML=`<div class="pipe-icon" style="background:${s.bg}">${s.icon}</div><div class="pipe-name">${s.name.replace('\n','<br/>')}</div>`;
+  pw.appendChild(el);
+  if(i<steps.length-1){ const a=document.createElement('div'); a.className='pipe-connector'; a.textContent='→'; pw.appendChild(a); }
+});
+showStep(0);
+
+const dockingData = {
+  aspirin:   { cox2:{score:-7.2,hb:3,vdw:-18.4,elec:-3.1,lip:true},  ace2:{score:-4.1,hb:1,vdw:-10.2,elec:-1.8,lip:true},  hivp:{score:-3.8,hb:0,vdw:-9.1,elec:-1.2,lip:true},  egfr:{score:-4.5,hb:2,vdw:-11.3,elec:-2.0,lip:true},  ada2:{score:-5.1,hb:2,vdw:-13.0,elec:-2.5,lip:true},  dpp4:{score:-5.5,hb:2,vdw:-14.2,elec:-2.7,lip:true} },
+  ibuprofen: { cox2:{score:-8.1,hb:1,vdw:-22.1,elec:-2.3,lip:true},  ace2:{score:-5.2,hb:1,vdw:-14.1,elec:-1.5,lip:true},  hivp:{score:-4.9,hb:1,vdw:-12.8,elec:-1.1,lip:true},  egfr:{score:-5.6,hb:1,vdw:-15.0,elec:-1.9,lip:true},  ada2:{score:-6.2,hb:2,vdw:-16.5,elec:-2.0,lip:true},  dpp4:{score:-6.8,hb:2,vdw:-18.3,elec:-2.2,lip:true} },
+  caffeine:  { cox2:{score:-5.5,hb:2,vdw:-14.2,elec:-4.1,lip:true},  ace2:{score:-5.9,hb:3,vdw:-15.0,elec:-4.5,lip:true},  hivp:{score:-4.2,hb:1,vdw:-11.0,elec:-2.8,lip:true},  egfr:{score:-5.0,hb:2,vdw:-13.1,elec:-3.5,lip:true},  ada2:{score:-7.3,hb:4,vdw:-19.2,elec:-5.0,lip:true},  dpp4:{score:-5.8,hb:2,vdw:-15.5,elec:-3.9,lip:true} },
+  oseltamivir:{cox2:{score:-4.8,hb:2,vdw:-12.0,elec:-3.2,lip:true}, ace2:{score:-8.4,hb:6,vdw:-24.2,elec:-5.8,lip:true},  hivp:{score:-5.5,hb:3,vdw:-14.5,elec:-4.1,lip:true},  egfr:{score:-5.2,hb:3,vdw:-13.8,elec:-3.8,lip:true},  ada2:{score:-4.9,hb:2,vdw:-12.5,elec:-3.0,lip:true},  dpp4:{score:-6.1,hb:4,vdw:-16.2,elec:-4.4,lip:true} },
+  remdesivir:{cox2:{score:-5.2,hb:3,vdw:-13.5,elec:-4.0,lip:false}, ace2:{score:-9.1,hb:7,vdw:-26.5,elec:-6.4,lip:false}, hivp:{score:-7.2,hb:5,vdw:-21.0,elec:-5.5,lip:false}, egfr:{score:-6.8,hb:4,vdw:-19.5,elec:-5.1,lip:false}, ada2:{score:-5.5,hb:3,vdw:-15.0,elec:-4.2,lip:false}, dpp4:{score:-7.0,hb:5,vdw:-20.2,elec:-5.3,lip:false} },
+  lopinavir: { cox2:{score:-5.0,hb:2,vdw:-18.0,elec:-3.5,lip:false}, ace2:{score:-7.8,hb:5,vdw:-28.0,elec:-5.2,lip:false}, hivp:{score:-10.5,hb:6,vdw:-35.2,elec:-7.1,lip:false},egfr:{score:-6.5,hb:3,vdw:-22.5,elec:-4.8,lip:false}, ada2:{score:-5.8,hb:3,vdw:-19.5,elec:-4.0,lip:false}, dpp4:{score:-7.5,hb:4,vdw:-25.0,elec:-5.5,lip:false} },
+  metformin: { cox2:{score:-3.5,hb:4,vdw:-8.5,elec:-5.2,lip:true},   ace2:{score:-3.2,hb:3,vdw:-7.8,elec:-4.8,lip:true},  hivp:{score:-2.9,hb:2,vdw:-6.5,elec:-4.2,lip:true},  egfr:{score:-3.8,hb:4,vdw:-9.0,elec:-5.5,lip:true},  ada2:{score:-3.1,hb:3,vdw:-7.2,elec:-4.5,lip:true},  dpp4:{score:-7.2,hb:6,vdw:-18.5,elec:-6.8,lip:true} },
+};
+
+function scoreClass(s){
+  if(s<=-8) return 'good';
+  if(s<=-5.5) return 'ok';
+  return 'bad';
+}
+function scoreLabel(s){
+  if(s<=-8) return '✅ Strong';
+  if(s<=-5.5) return '⚠️ Moderate';
+  return '❌ Weak';
+}
+function pct(s){ return Math.min(100, Math.max(0, (-s/12)*100)).toFixed(0); }
+
+function runDocking(){
+  const btn = document.getElementById('dock-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Running...';
+
+  setTimeout(()=>{
+    const lig = document.getElementById('ligand-select').value;
+    const rec = document.getElementById('receptor-select').value;
+    const d = dockingData[lig][rec];
+    const sc = scoreClass(d.score);
+    const pctVal = pct(d.score);
+    const colors = {good:'#10b981',ok:'#f59e0b',bad:'#f87171'};
+
+    document.getElementById('dock-metrics').innerHTML = `
+      <div class="metric-row">
+        <span class="metric-label">Predicted Binding Energy (ΔG)</span>
+        <span class="metric-value ${sc}">${d.score} kcal/mol — ${scoreLabel(d.score)}</span>
+      </div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-bg">
+          <div class="score-bar-fill" style="width:0;background:${colors[sc]}" data-w="${pctVal}"></div>
+        </div>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Hydrogen Bonds Formed</span>
+        <span class="metric-value" style="color:var(--accent)">${d.hb}</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Van der Waals Interaction</span>
+        <span class="metric-value" style="color:var(--accent2)">${d.vdw} kcal/mol</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Electrostatic Energy</span>
+        <span class="metric-value" style="color:var(--accent3)">${d.elec} kcal/mol</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Lipinski Rule of Five</span>
+        <span class="metric-value ${d.lip?'good':'bad'}">${d.lip?'✅ PASS':'❌ FAIL (may have bioavailability issues)'}</span>
+      </div>
+      <div style="margin-top:1rem;padding:0.8rem 1rem;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);border-radius:8px;font-size:0.8rem;color:var(--muted);line-height:1.6;">
+        <b style="color:var(--text)">Interpretation:</b> A ΔG of <b>${d.score} kcal/mol</b> indicates 
+        ${d.score<=-8?'strong, promising binding — worth advancing to ADMET analysis and lab testing.':d.score<=-5.5?'moderate binding — may be optimized with structural modifications.':'weak binding — this molecule is unlikely to inhibit this target effectively.'}
+      </div>
+    `;
+
+    const panel = document.getElementById('dock-result');
+    panel.classList.add('show');
+    // animate bar
+    setTimeout(()=>{
+      const bar = panel.querySelector('.score-bar-fill');
+      if(bar) bar.style.width = bar.dataset.w + '%';
+    },100);
+
+    btn.disabled = false;
+    btn.innerHTML = '▶ Run Screening';
+  }, 1400);
+}
+
+
+// ═══ ADMET (live AI if available, built-in examples otherwise) ═══
+// ═══ ADMET built-in library: 56 common medicines + 20 antibiotics (typical textbook values, approximate) ═══
+const sub = s => s.replace(/\d+/g, d => d.split('').map(c => '₀₁₂₃₄₅₆₇₈₉'[c]).join(''));
+const medRows = [
+["Paracetamol","acetaminophen,dolo,crocin,calpol","C8H9NO2","151.16 Da","Analgesic / antipyretic","85","Vd ≈ 0.9 L/kg","Liver: glucuronidation, CYP2E1","2","renal","Liver injury in overdose","bad","≈ 14 mg/mL","Pass"],
+["Aspirin","ecosprin,disprin","C9H8O4","180.16 Da","NSAID / antiplatelet","68","Vd ≈ 0.15 L/kg","Hydrolysed to salicylate in liver","2–3","renal","GI irritation and bleeding risk","ok","≈ 3 mg/mL","Pass"],
+["Ibuprofen","brufen,advil","C13H18O2","206.28 Da","NSAID","80–100","Vd ≈ 0.12 L/kg; 99% protein-bound","CYP2C9","2","renal","GI and kidney risk at high dose","ok","Low (≈ 21 mg/L)","Pass"],
+["Diclofenac","voveran","C14H11Cl2NO2","296.15 Da","NSAID","50","Vd ≈ 0.17 L/kg; >99% protein-bound","CYP2C9 and glucuronidation","2","renal and bile","GI, liver and heart risk","ok","Low","Pass"],
+["Naproxen","naprosyn","C14H14O3","230.26 Da","NSAID","95","Vd ≈ 0.16 L/kg; >99% protein-bound","CYP2C9 / CYP1A2","12–17","renal","GI and heart risk","ok","Low","Pass"],
+["Metformin","glycomet","C4H11N5","129.16 Da","Antidiabetic (biguanide)","50–60","Vd ≈ 3 L/kg; not protein-bound","Not metabolised","6","renal (unchanged)","Rare lactic acidosis","ok","Very high","Pass"],
+["Atorvastatin","lipitor,atorva","C33H35FN2O5","558.64 Da","Statin (cholesterol)","14","Vd ≈ 381 L; >98% protein-bound","CYP3A4","14","bile","Muscle pain, liver enzyme rise","ok","Low","Fail (MW > 500)"],
+["Simvastatin","zocor","C25H38O5","418.57 Da","Statin (cholesterol)","5","Highly protein-bound (>95%)","CYP3A4 (prodrug)","2–3","faeces","Muscle injury; many drug interactions","ok","Very low","Pass"],
+["Rosuvastatin","crestor","C22H28FN3O6S","481.54 Da","Statin (cholesterol)","20","Vd ≈ 134 L; 90% protein-bound","Minimal (CYP2C9)","19","faeces","Muscle pain; rare rhabdomyolysis","ok","Moderate","Borderline"],
+["Amlodipine","amlong,norvasc","C20H25ClN2O5","408.88 Da","Calcium channel blocker (BP)","60–65","Vd ≈ 21 L/kg; 97% protein-bound","CYP3A4","30–50","renal","Ankle swelling; low serious toxicity","ok","Low","Pass"],
+["Atenolol","tenormin","C14H22N2O3","266.34 Da","Beta blocker","50","Vd ≈ 0.7 L/kg; low protein binding","Minimal","6–7","renal","Slow heart rate, tiredness","ok","Moderate","Pass"],
+["Metoprolol","metolar,lopressor","C15H25NO3","267.36 Da","Beta blocker","50","Vd ≈ 4 L/kg","CYP2D6","3–7","renal","Slow heart rate, tiredness","ok","Very high","Pass"],
+["Losartan","losar,cozaar","C22H23ClN6O","422.91 Da","ARB (blood pressure)","33","Vd ≈ 34 L; 99% protein-bound","CYP2C9 / CYP3A4 to active form","2","bile and renal","Harms a fetus; high potassium","ok","Moderate","Pass"],
+["Lisinopril","listril,zestril","C21H31N3O5","405.49 Da","ACE inhibitor","25","Not protein-bound","Not metabolised","12","renal (unchanged)","Dry cough; rare angioedema","ok","High","Pass"],
+["Enalapril","envas,vasotec","C20H28N2O5","376.45 Da","ACE inhibitor","60","Prodrug turned into enalaprilat","Liver esterases (prodrug)","11","renal","Dry cough; rare angioedema","ok","High","Pass"],
+["Omeprazole","omez,prilosec","C17H19N3O3S","345.42 Da","Proton pump inhibitor","35–60","Vd ≈ 0.3 L/kg; 95% protein-bound","CYP2C19 / CYP3A4","0.5–1","renal","Low; long use may lower B12 and magnesium","ok","Low","Pass"],
+["Pantoprazole","pan 40,pantop,protonix","C16H15F2N3O4S","383.37 Da","Proton pump inhibitor","77","Vd ≈ 0.15 L/kg; 98% protein-bound","CYP2C19","1","renal","Low; long use may lower magnesium","good","Low","Pass"],
+["Famotidine","famocid,pepcid","C8H15N7O2S2","337.45 Da","H2 blocker (acid)","40–45","Vd ≈ 1.1 L/kg; low protein binding","Minimal","2.5–3.5","renal","Low","good","Moderate","Pass"],
+["Cetirizine","zyrtec,cetzine","C21H25ClN2O3","388.89 Da","Antihistamine","70","Vd ≈ 0.5 L/kg; 93% protein-bound","Minimal","8","renal","Mild drowsiness","ok","Moderate","Pass"],
+["Loratadine","claritin,lorfast","C22H23ClN2O2","382.88 Da","Antihistamine","40","97% protein-bound","CYP3A4 / CYP2D6 to desloratadine","8","renal and faeces","Low; little drowsiness","good","Low","Pass"],
+["Salbutamol","albuterol,asthalin,ventolin","C13H21NO3","239.31 Da","Bronchodilator (asthma)","50","Low protein binding (~10%)","Liver sulfation","4–6","renal","Tremor, fast heartbeat","ok","Moderate","Pass"],
+["Montelukast","montair,singulair","C35H36ClNO3S","586.18 Da","Leukotriene blocker (asthma)","64","Vd ≈ 0.15 L/kg; >99% protein-bound","CYP3A4 / CYP2C8","5","bile","Rare mood and sleep changes","ok","Very low","Fail (MW > 500)"],
+["Prednisolone","wysolone,deltacortril","C21H28O5","360.44 Da","Corticosteroid","80","Vd ≈ 0.4 L/kg; dose-dependent binding","Liver","2–4","renal","Long use: weight gain, bone loss, high sugar","ok","Low","Pass"],
+["Dexamethasone","dexona,decadron","C22H29FO5","392.46 Da","Corticosteroid","80–90","Vd ≈ 0.8 L/kg; 77% protein-bound","CYP3A4","3–4","renal","Long use: high sugar, infection risk","ok","Low","Pass"],
+["Levothyroxine","thyronorm,eltroxin","C15H11I4NO4","776.87 Da","Thyroid hormone","60–80",">99% protein-bound","Deiodination in liver and tissues","6–7 days","renal and faeces","Overdose causes hyperthyroid symptoms","ok","Very low","Fail (MW > 500)"],
+["Glimepiride","amaryl,glimisave","C24H34N4O5S","490.62 Da","Sulfonylurea (diabetes)","100","Vd ≈ 0.1 L/kg; >99% protein-bound","CYP2C9","5–8","renal and faeces","Low blood sugar (hypoglycaemia)","ok","Low","Pass"],
+["Sitagliptin","januvia","C16H15F6N5O","407.31 Da","DPP-4 inhibitor (diabetes)","87","Vd ≈ 198 L; 38% protein-bound","Minimal","12","renal (unchanged)","Low; rare pancreatitis","good","High (as salt)","Pass"],
+["Pioglitazone","pioz,actos","C19H20N2O3S","356.44 Da","Thiazolidinedione (diabetes)","80","Vd ≈ 0.6 L/kg; >99% protein-bound","CYP2C8","3–7","bile","Fluid retention; heart failure risk","ok","Very low","Pass"],
+["Warfarin","warf,coumadin","C19H16O4","308.33 Da","Anticoagulant","100","Vd ≈ 0.14 L/kg; 99% protein-bound","CYP2C9","40","renal (metabolites)","Bleeding; narrow therapeutic range","bad","Low","Pass"],
+["Clopidogrel","plavix,clopitab","C16H16ClNO2S","321.82 Da","Antiplatelet","50","98% protein-bound","Prodrug activated by CYP2C19","6","renal and faeces","Bleeding risk","ok","Low","Pass"],
+["Furosemide","lasix","C12H11ClN2O5S","330.74 Da","Loop diuretic","60","Vd ≈ 0.1 L/kg; 98% protein-bound","Minimal glucuronidation","2","renal","Dehydration, low potassium","ok","Low","Pass"],
+["Hydrochlorothiazide","hctz,aquazide","C7H8ClN3O4S2","297.74 Da","Thiazide diuretic","70","Vd ≈ 3 L/kg","Not metabolised","6–15","renal (unchanged)","Low potassium and sodium","ok","Low","Pass"],
+["Spironolactone","aldactone","C24H32O4S","416.57 Da","Potassium-sparing diuretic","70",">90% protein-bound","Liver to active metabolites","1.4","renal and bile","High potassium","ok","Very low","Pass"],
+["Digoxin","lanoxin","C41H64O14","780.94 Da","Cardiac glycoside","70–80","Vd ≈ 7 L/kg","Minimal","36–48","renal","Narrow therapeutic range; toxic at slightly high levels","bad","Low","Fail (MW > 500)"],
+["Diazepam","valium,calmpose","C16H13ClN2O","284.74 Da","Benzodiazepine","100","Vd ≈ 1.1 L/kg; 98% protein-bound","CYP2C19 / CYP3A4","20–100","renal","Sedation, dependence","ok","Low","Pass"],
+["Alprazolam","alprax,xanax","C17H13ClN4","308.76 Da","Benzodiazepine","90","Vd ≈ 1 L/kg; 80% protein-bound","CYP3A4","11","renal","Sedation, dependence","ok","Low","Pass"],
+["Sertraline","zoloft,serta","C17H17Cl2N","306.23 Da","SSRI antidepressant","44","Vd ≈ 20 L/kg; 98% protein-bound","Liver (CYP2B6 and others)","26","renal and faeces","Nausea; rare serotonin syndrome","ok","Low","Pass"],
+["Fluoxetine","prozac,fludac","C17H18F3NO","309.33 Da","SSRI antidepressant","72","Vd ≈ 20–45 L/kg; 95% protein-bound","CYP2D6","1–3 days","renal","Nausea; interacts with many drugs","ok","Low","Pass"],
+["Amitriptyline","tryptomer,elavil","C20H23N","277.40 Da","Tricyclic antidepressant","45","Vd ≈ 15 L/kg; 95% protein-bound","CYP2D6 / CYP2C19","10–28","renal","Dangerous heart effects in overdose","bad","Low","Pass"],
+["Carbamazepine","tegretol,zen","C15H12N2O","236.27 Da","Anticonvulsant","75–85","Vd ≈ 1 L/kg; 75% protein-bound","CYP3A4 (induces its own breakdown)","12–17","renal","Rash; many drug interactions","ok","Low","Pass"],
+["Phenytoin","eptoin,dilantin","C15H12N2O2","252.27 Da","Anticonvulsant","90","Vd ≈ 0.6 L/kg; 90% protein-bound","CYP2C9 / CYP2C19 (saturable)","22","renal (metabolites)","Narrow therapeutic range","bad","Very low","Pass"],
+["Valproic acid","valparin,depakote,sodium valproate","C8H16O2","144.21 Da","Anticonvulsant","100","Vd ≈ 0.15 L/kg; 90% protein-bound","Liver glucuronidation","9–16","renal","Liver injury; birth defects","bad","Moderate","Pass"],
+["Levetiracetam","levipil,keppra","C8H14N2O2","170.21 Da","Anticonvulsant","100","Vd ≈ 0.6 L/kg; <10% protein-bound","Minimal (enzymatic hydrolysis)","7","renal (unchanged)","Mood changes, drowsiness","ok","Very high","Pass"],
+["Gabapentin","gabapin,neurontin","C9H17NO2","171.24 Da","Anticonvulsant / nerve pain","60","Vd ≈ 0.8 L/kg; not protein-bound","Not metabolised","5–7","renal (unchanged)","Dizziness, drowsiness","ok","High","Pass"],
+["Tramadol","ultracet,ultram","C16H25NO2","263.38 Da","Opioid analgesic","75","Vd ≈ 2.7 L/kg; 20% protein-bound","CYP2D6 / CYP3A4","6","renal","Seizure risk; dependence","ok","High (as salt)","Pass"],
+["Morphine","ms contin","C17H19NO3","285.34 Da","Opioid analgesic","25–30","Vd ≈ 3–4 L/kg; 35% protein-bound","Liver glucuronidation","2–3","renal","Breathing depression; dependence","bad","Moderate","Pass"],
+["Ondansetron","emeset,zofran","C18H19N3O","293.37 Da","Anti-nausea (5-HT3 blocker)","60","Vd ≈ 2 L/kg; 75% protein-bound","CYP3A4 / CYP1A2","3–4","renal (metabolites)","QT prolongation at high dose","ok","Moderate (as salt)","Pass"],
+["Domperidone","domstal,motilium","C22H24ClN5O2","425.91 Da","Anti-nausea (D2 blocker)","15","91% protein-bound","CYP3A4","7–9","faeces and renal","QT prolongation","ok","Very low","Pass"],
+["Sildenafil","viagra,manforce","C22H30N6O4S","474.58 Da","PDE5 inhibitor","40","Vd ≈ 105 L; 96% protein-bound","CYP3A4","4","faeces","Headache, flushing; dangerous with nitrates","ok","Low","Pass"],
+["Allopurinol","zyloric,zyloprim","C5H4N4O","136.11 Da","Gout (xanthine oxidase inhibitor)","80–90","Vd ≈ 0.6 L/kg; not protein-bound","Converted to oxypurinol","1–2 h (active form ≈ 15 h)","renal","Rare severe skin reactions","ok","Low","Pass"],
+["Caffeine","","C8H10N4O2","194.19 Da","CNS stimulant","100","Vd ≈ 0.6 L/kg; crosses blood–brain barrier","CYP1A2","5","renal","Low; jitters and insomnia at high dose","good","≈ 21 mg/mL","Pass"],
+["Tamsulosin","urimax,flomax","C20H28N2O5S","408.51 Da","Alpha blocker (prostate)","90","Vd ≈ 0.2 L/kg; 99% protein-bound","CYP3A4 / CYP2D6","9–15","renal and faeces","Low blood pressure on standing","ok","Low","Pass"],
+["Hydroxychloroquine","hcq,hcqs,plaquenil","C18H26ClN3O","335.87 Da","Antimalarial / antirheumatic","70","Large Vd; accumulates in tissues","CYP2D6 / CYP3A4 / CYP2C8","40 days","renal","Retina damage with long use","ok","Moderate (as sulfate)","Pass"],
+["Fluconazole","forcan,diflucan","C13H12F2N6O","306.27 Da","Antifungal","90","Vd ≈ 0.7 L/kg; 12% protein-bound","Minimal","30","renal (unchanged)","Liver enzyme rise; QT risk","ok","Moderate","Pass"],
+["Acyclovir","aciclovir,zovirax","C8H11N5O3","225.20 Da","Antiviral","15–30","Vd ≈ 0.7 L/kg; low protein binding","Minimal","3","renal","Kidney effects at high IV dose","good","Moderate","Pass"],
+["Oseltamivir","tamiflu,fluvir","C16H28N2O4","312.40 Da","Antiviral (influenza)","75","Prodrug turned into oseltamivir carboxylate","Liver esterases (prodrug)","6–10","renal","Nausea, vomiting","good","High (as phosphate)","Pass"]
+];
+const abxRows = [
+["Amoxicillin","mox,amoxil","C16H19N3O5S","365.40 Da","Penicillin (beta-lactam)","90","Vd ≈ 0.3 L/kg; 20% protein-bound","Minimal","1","renal (unchanged)","Allergy (rash, anaphylaxis); diarrhoea","ok","≈ 4 mg/mL","Pass"],
+["Cephalexin","keflex,sporidex","C16H17N3O4S","347.39 Da","Cephalosporin (1st gen)","90","Vd ≈ 0.3 L/kg; low protein binding","Not metabolised","1","renal (unchanged)","Allergy; diarrhoea","ok","Moderate","Pass"],
+["Cefixime","taxim-o,suprax","C16H15N5O7S2","453.45 Da","Cephalosporin (3rd gen)","40–50","Vd ≈ 0.3 L/kg; 65% protein-bound","Minimal","3–4","renal and bile","Allergy; diarrhoea","ok","Low","Pass"],
+["Ceftriaxone","monocef,rocephin","C18H18N8O7S3","554.58 Da","Cephalosporin (3rd gen), injection","IV","Vd ≈ 0.12 L/kg; 85–95% protein-bound","Minimal","6–9","renal and bile","Allergy; biliary sludge","ok","Moderate (as sodium salt)","Fail (MW > 500)"],
+["Azithromycin","azithral,zithromax","C38H72N2O12","748.98 Da","Macrolide","37","Vd ≈ 31 L/kg; accumulates in tissues","Minimal (liver)","68","bile","Nausea; rare QT prolongation","ok","Low","Fail (MW > 500)"],
+["Clarithromycin","claribid,biaxin","C38H69NO13","747.95 Da","Macrolide","50","Vd ≈ 3–4 L/kg; 70% protein-bound","CYP3A4 (also inhibits it)","3–7","renal and faeces","Many drug interactions; QT prolongation","ok","Very low","Fail (MW > 500)"],
+["Doxycycline","doxy,vibramycin","C22H24N2O8","444.44 Da","Tetracycline","90–100","Vd ≈ 0.7 L/kg; 80–90% protein-bound","Minimal","18–22","renal and faeces","Sun sensitivity; food-pipe irritation","ok","Low","Pass"],
+["Ciprofloxacin","cipro,ciplox","C17H18FN3O3","331.34 Da","Fluoroquinolone","70","Vd ≈ 2–3 L/kg; 20–40% protein-bound","Partly liver; inhibits CYP1A2","4","renal","Tendon damage; nerve effects; QT","ok","Low","Pass"],
+["Levofloxacin","levoflox,levaquin","C18H20FN3O4","361.37 Da","Fluoroquinolone","99","Vd ≈ 1.1 L/kg; 24–38% protein-bound","Minimal","6–8","renal (unchanged)","Tendon damage; nerve effects","ok","Moderate","Pass"],
+["Moxifloxacin","moxif,avelox","C21H24FN3O4","401.43 Da","Fluoroquinolone","90","Vd ≈ 2 L/kg; 30–50% protein-bound","Liver glucuronidation and sulfation","12","bile and renal","QT prolongation; tendon damage","ok","Moderate (as HCl)","Pass"],
+["Metronidazole","flagyl,metrogyl","C6H9N3O3","171.15 Da","Nitroimidazole","100","Vd ≈ 0.7 L/kg; <20% protein-bound","Liver oxidation","8","renal","Metallic taste; nerve effects with long use; avoid alcohol","ok","≈ 10 mg/mL","Pass"],
+["Nitrofurantoin","macrobid,niftran","C8H6N4O5","238.16 Da","Urinary antibiotic","87","Low blood levels; concentrates in urine","Rapid liver and tissue","0.5–1","renal","Lung and nerve reactions with long use","ok","Low","Pass"],
+["Trimethoprim","tmp,trimpex","C14H18N4O3","290.32 Da","Folate-pathway inhibitor","90–100","Vd ≈ 1.6 L/kg; 44% protein-bound","Minimal","8–10","renal","High potassium; rash","ok","Low","Pass"],
+["Sulfamethoxazole","smx,bactrim","C10H11N3O3S","253.28 Da","Sulfonamide","90–100","Vd ≈ 0.2 L/kg; 70% protein-bound","Liver acetylation","10","renal","Rash (rarely severe); allergy","ok","Low","Pass"],
+["Clindamycin","dalacin,cleocin","C18H33ClN2O5S","424.98 Da","Lincosamide","90","Vd ≈ 1 L/kg; 90% protein-bound","CYP3A4","2–3","bile and renal","C. difficile colitis","ok","Moderate (as HCl)","Pass"],
+["Linezolid","linospan,zyvox","C16H20FN3O4","337.35 Da","Oxazolidinone","100","Vd ≈ 0.6 L/kg; 31% protein-bound","Oxidation (not CYP)","5","renal","Low blood counts with long use; serotonin syndrome risk","ok","Moderate","Pass"],
+["Vancomycin","vanco","C66H75Cl2N9O24","1449.25 Da","Glycopeptide, injection","IV","Vd ≈ 0.7 L/kg; 50% protein-bound","Not metabolised","4–6","renal","Kidney and ear toxicity; infusion reaction","bad","High (as HCl)","Fail (MW > 500)"],
+["Gentamicin","gentamycin,garamycin","C21H43N5O7","477.60 Da","Aminoglycoside, injection","IV","Vd ≈ 0.25 L/kg; low protein binding","Not metabolised","2–3","renal","Kidney and hearing damage; narrow therapeutic range","bad","High","Fail (HBD > 5)"],
+["Rifampicin","rifampin,r-cin,rimactane","C43H58N4O12","822.94 Da","Rifamycin (anti-TB)","90–95","Vd ≈ 1 L/kg; 80% protein-bound","Liver; strongly induces CYP enzymes","3–5","bile and renal","Liver injury; many drug interactions; orange body fluids","bad","Low","Fail (MW > 500)"],
+["Isoniazid","inh,isonex","C6H7N3O","137.14 Da","Anti-TB","90–100","Vd ≈ 0.6 L/kg; low protein binding","Liver acetylation (NAT2)","1–4","renal","Liver injury; nerve damage (give vitamin B6)","bad","High","Pass"]
+];
+const admetLocal = {}, medList = [], abxList = [];
+function mkEntry(r){
+  const [name,alias,formula,mw,cls,F,dist,metab,t,route,tox,toxS,sol,lip] = r;
+  const iv = F === 'IV', fnum = iv ? 0 : parseFloat(F.match(/\d+/)[0]);
+  const absLvl = iv ? 'Poor oral (given by injection)' : fnum>=80 ? 'High' : fnum>=40 ? 'Medium' : 'Low';
+  const absS = iv ? 'bad' : fnum>=80 ? 'good' : fnum>=40 ? 'ok' : 'bad';
+  const tt = /h|day/.test(t) ? t : t + ' h';
+  const tmax = Math.max(...tt.match(/\d+(\.\d+)?/g).map(Number)) * (/day/.test(tt) ? 24 : 1);
+  const tS = tmax<=12 ? 'good' : tmax<=72 ? 'ok' : 'bad';
+  const mS = /induces|inhibits/.test(metab) ? 'bad' : /CYP/.test(metab) ? 'ok' : 'good';
+  const dS = /accumulates|Large Vd/.test(dist) ? 'ok' : 'good';
+  const sS = /^Very low/.test(sol) ? 'bad' : /^Low/.test(sol) ? 'ok' : 'good';
+  const lS = lip.startsWith('Pass') ? 'good' : lip.startsWith('Borderline') ? 'ok' : 'bad';
+  const reason = (lip.match(/\((.*)\)/)||['',''])[1];
+  const summary = `${name} (${cls}). ` +
+    (iv ? 'It is given by injection because oral absorption is poor. ' : `Oral absorption is ${absLvl.toLowerCase()}. `) +
+    `Main concern: ${tox}. ` +
+    (lS==='good' ? "It passes Lipinski's rule of five." : `It breaks Lipinski's rule of five (${reason || 'borderline'}), yet still works as a drug, because the rules are a guide, not a law.`);
+  return {molecule:name, formula:sub(formula), mw, cls, summary, properties:[
+    ['🫀','ABSORPTION',absLvl,absS], ['🩸','DISTRIBUTION',dist,dS], ['⚙️','METABOLISM',metab,mS],
+    ['🚽','EXCRETION',`t½ ≈ ${tt}, ${route}`,tS], ['☠️','TOXICITY',tox,toxS], ['💧','SOLUBILITY',sol,sS],
+    ['🧬','BIOAVAILABILITY', iv ? 'Not an oral drug' : `≈ ${F}%`, absS], ['📏','LIPINSKI Ro5',lip,lS]]};
+}
+function register(rows, list){
+  rows.forEach(r=>{
+    const e = mkEntry(r); list.push(r[0]);
+    [r[0], ...r[1].split(',')].map(s=>s.trim().toLowerCase()).filter(Boolean).forEach(k=>admetLocal[k]=e);
+  });
+}
+register(medRows, medList); register(abxRows, abxList);
+function findLocal(q){
+  const k = q.trim().toLowerCase();
+  if(admetLocal[k]) return admetLocal[k];
+  if(k.length>=3){ const m = Object.keys(admetLocal).find(n=>n.startsWith(k)); if(m) return admetLocal[m]; }
+  return null;
+}
+(function buildLibrary(){
+  const dl = document.createElement('datalist'); dl.id='drug-list';
+  dl.innerHTML = [...medList,...abxList].map(n=>`<option value="${n}">`).join('');
+  document.body.appendChild(dl);
+  const mk = (id,list)=>{ document.getElementById(id).innerHTML = list.slice().sort().map(n=>`<button class="chip" onclick="pickDrug('${n}')">${n}</button>`).join(''); };
+  mk('chips-meds',medList); mk('chips-abx',abxList);
+  document.getElementById('cnt-meds').textContent = medList.length;
+  document.getElementById('cnt-abx').textContent = abxList.length;
+})();
+function pickDrug(n){
+  document.getElementById('admet-input').value = n;
+  document.getElementById('admet-input').scrollIntoView({behavior:'smooth',block:'center'});
+  runADMET();
+}
+
+function renderADMET(p){
+  const colorMap = {good:'var(--accent3)',ok:'var(--warn)',bad:'#f87171'};
+  document.getElementById('admet-cards').innerHTML = p.properties.map(x=>{
+    const [icon,name,value,status] = Array.isArray(x)?x:[x.icon,x.name,x.value,x.status];
+    return `<div class="admet-card"><div class="admet-icon">${icon}</div><div class="admet-name">${name}</div><div class="admet-val" style="color:${colorMap[status]||'var(--text)'}">${value}</div></div>`;
+  }).join('');
+  document.getElementById('admet-summary').innerHTML = `<b style="color:var(--text)">${p.molecule}</b> &nbsp;·&nbsp; <span style="font-family:var(--mono);color:var(--accent)">${p.formula}</span> &nbsp;·&nbsp; MW: ${p.mw}${p.cls?' &nbsp;·&nbsp; '+p.cls:''}<br/><br/>${p.summary}`;
+}
+async function runADMET(){
+  const mol = document.getElementById('admet-input').value.trim();
+  if(!mol) return;
+  const btn = document.getElementById('admet-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Predicting...';
+  document.getElementById('admet-result').classList.add('show');
+  document.getElementById('admet-cards').innerHTML = '<div style="color:var(--muted);font-size:0.85rem;padding:0.5rem 0">⏳ Analyzing molecule...</div>';
+  document.getElementById('admet-summary').textContent = '';
+  const local = findLocal(mol);
+  if(local){ renderADMET(local); btn.disabled=false; btn.innerHTML='🔍 Predict ADMET'; return; }
+  let done = false;
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      model:'claude-sonnet-4-6',max_tokens:1000,
+      system:`You are an ADMET prediction engine for a student project. Respond ONLY with valid JSON (no markdown). Format: {"found":true,"molecule":"name","formula":"formula","mw":"MW in Da","properties":[{"icon":"🫀","name":"ABSORPTION","value":"...","status":"good/ok/bad"},{"icon":"🩸","name":"DISTRIBUTION","value":"...","status":"..."},{"icon":"⚙️","name":"METABOLISM","value":"...","status":"..."},{"icon":"🚽","name":"EXCRETION","value":"...","status":"..."},{"icon":"☠️","name":"TOXICITY","value":"...","status":"..."},{"icon":"💧","name":"SOLUBILITY","value":"...","status":"..."},{"icon":"🧬","name":"BIOAVAILABILITY","value":"...","status":"..."},{"icon":"📏","name":"LIPINSKI Ro5","value":"Pass/Fail","status":"good/bad"}],"summary":"2-3 sentences"} If unknown return {"found":false}.`,
+      messages:[{role:'user',content:`ADMET prediction for: ${mol}`}]})});
+    const data = await resp.json();
+    const text = data.content.map(i=>i.text||'').join('');
+    const parsed = JSON.parse(text.replace(/```json|```/g,'').trim());
+    if(parsed.found){ renderADMET(parsed); done = true; }
+    else { document.getElementById('admet-cards').innerHTML='<div style="color:var(--warn);font-size:0.85rem;padding:0.5rem 0">⚠ Molecule not recognized. Try a common drug name like "Aspirin" or "Metformin".</div>'; done = true; }
+  } catch(err){}
+  if(!done){
+    const k = mol.toLowerCase();
+    if(admetLocal[k]) renderADMET(admetLocal[k]);
+    else document.getElementById('admet-cards').innerHTML='<div style="color:var(--warn);font-size:0.85rem;padding:0.5rem 0">⚠ Not in the built-in library. Pick a drug from the Drug Library below.</div>';
+  }
+  btn.disabled=false; btn.innerHTML='🔍 Predict ADMET';
+}
+
+// ═══ CHAT (live AI if available, report-based answers otherwise) ═══
+const kb = [
+  [/alphafold|protein.*(fold|structure)|plddt|casp/, 'AlphaFold is a neural network that predicts a protein\'s 3D structure from its amino acid sequence. In the CASP14 test its median backbone error was 0.96 Å versus 2.8 Å for the next best method, and it gives pLDDT confidence scores so users know which regions to trust [7].'],
+  [/virtual screening|screen|halicin|antibiotic|107/, 'Virtual screening uses a computer to rank a very large number of molecules. Stokes et al. trained a neural network on 2,335 molecules, applied it to libraries of more than 107 million, and tested 23 predictions in the lab; 8 were antibacterial. Halicin was found in the Drug Repurposing Hub [6].'],
+  [/de novo|generative|gentrl|ddr1|21 days/, 'De novo design means asking a model to create new molecules from scratch. Zhavoronkov et al. used the generative model GENTRL to design DDR1 kinase inhibitors in 21 days, with 46 days from design to validation [5].'],
+  [/phase|clinical|success|trial/, 'Jayatunga et al. report 80–90% Phase I success for AI-discovered molecules (historic industry range about 40–65%), but about 40% in Phase II on a limited sample — similar to historic averages. So early success does not yet clearly continue into efficacy trials [8].'],
+  [/limit|bias|challenge|problem|weak/, 'Main limits: biased or narrow training data, human bias, small Phase II samples, and models that cannot yet fully predict how a drug behaves in the human body. That is why lab and clinical validation are still needed [4], [8].'],
+  [/cost|time|expensive|years|billion/, 'One survey states a new drug costs about $2.6 billion on average and can take more than 10 years, with many candidates failing along the way. Removing weak candidates early with AI can save time and cost [2].'],
+  [/pipeline|stage|workflow|where/, 'The pipeline has six stages: target identification, hit finding (virtual screening), lead design (de novo), synthesis planning, preclinical tests and clinical trials. AI can help at every stage — see the Pipeline section above.'],
+  [/repurpos/, 'Drug repurposing finds new uses for existing drugs. In the antibiotic study, halicin was found as an antibacterial compound in the Drug Repurposing Hub [6].'],
+  [/replace|lab|wet/, 'AI does not replace the laboratory. It helps choose which experiments are worth doing first; predictions must still be checked in lab experiments, animal studies and clinical trials.'],
+  [/adm|toxic/, 'ADMET stands for Absorption, Distribution, Metabolism, Excretion and Toxicity. AI models predict these properties early so weak candidates are removed before preclinical tests — try the ADMET Predictor above.']
+];
+function localAnswer(q){
+  q = q.toLowerCase();
+  for(const [re,ans] of kb) if(re.test(q)) return ans;
+  return 'Good question! I can answer about the pipeline, AlphaFold, virtual screening, de novo design, clinical success rates, costs, ADMET or limitations. Try one of those topics.';
+}
+let chatHistory = [];
+function addMsg(role, text){
+  const wrap = document.getElementById('chat-messages');
+  const div = document.createElement('div'); div.className='msg';
+  const isAI = role==='assistant';
+  div.innerHTML=`<div class="msg-avatar ${isAI?'ai':'user'}">${isAI?'AI':'U'}</div><div class="msg-bubble ${isAI?'ai-bubble':''}">${text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+  wrap.appendChild(div); wrap.scrollTop=wrap.scrollHeight; return div;
+}
+function addTyping(){
+  const wrap = document.getElementById('chat-messages');
+  const div = document.createElement('div'); div.className='msg'; div.id='typing-indicator';
+  div.innerHTML=`<div class="msg-avatar ai">AI</div><div class="msg-bubble ai-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  wrap.appendChild(div); wrap.scrollTop=wrap.scrollHeight;
+}
+async function sendChat(){
+  const inp = document.getElementById('chat-input');
+  const text = inp.value.trim(); if(!text) return;
+  inp.value=''; inp.style.height='auto';
+  const btn = document.getElementById('chat-btn'); btn.disabled=true;
+  addMsg('user',text); chatHistory.push({role:'user',content:text}); addTyping();
+  let reply;
+  try{
+    const resp = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      model:'claude-sonnet-4-6',max_tokens:1000,
+      system:`You are an assistant for a first-year B.Tech student project "Artificial Intelligence in Drug Discovery" (Biology for Engineers). Explain in simple, student-friendly language. Cover: AI in the drug pipeline, AlphaFold, virtual screening, de novo design, drug repurposing, clinical trial success rates of AI-discovered molecules, ADMET, and limitations like biased data. Keep answers short.`,
+      messages:chatHistory})});
+    const data = await resp.json();
+    reply = data.content.map(i=>i.text||'').join('');
+    if(!reply) throw new Error('empty');
+  } catch(err){ reply = localAnswer(text); }
+  document.getElementById('typing-indicator')?.remove();
+  addMsg('assistant',reply); chatHistory.push({role:'assistant',content:reply});
+  btn.disabled=false;
+}
+
+
+</script>
+</body>
+</html>
